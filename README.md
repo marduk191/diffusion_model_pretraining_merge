@@ -243,7 +243,7 @@ The script handles all standard tensor types including:
 
 ## Requirements
 
-- Python 3.7+
+- Tested on Python 3.11.9
 - PyTorch 1.9+
 - tqdm
 - Standard library modules (json, struct, pathlib, argparse)
