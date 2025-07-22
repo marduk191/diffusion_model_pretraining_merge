@@ -286,7 +286,7 @@ def merge_models_sma(model_files: List[str], output_path: str, device: str = "cp
         # Sum tensors across all models
         for model_file in model_files:
             with MemoryEfficientSafeOpen(model_file) as f:
-                tensor = f.get_tensor(key).to(device)
+                tensor = f.get_tensor(key).to(device, non_blocking=True)
                 
                 if tensor_sum is None:
                     tensor_sum = tensor.clone()
@@ -346,7 +346,7 @@ def merge_models_ema(model_files: List[str], output_path: str, alpha: float = 0.
         # Apply EMA formula iteratively
         for i, model_file in enumerate(model_files):
             with MemoryEfficientSafeOpen(model_file) as f:
-                current_tensor = f.get_tensor(key).to(device)
+                current_tensor = f.get_tensor(key).to(device, non_blocking=True)
                 
                 if ema_tensor is None:
                     # Initialize with first tensor
@@ -429,7 +429,7 @@ def merge_models_wma(model_files: List[str], output_path: str, weights: List[flo
         # Compute weighted sum
         for i, model_file in enumerate(model_files):
             with MemoryEfficientSafeOpen(model_file) as f:
-                tensor = f.get_tensor(key).to(device)
+                tensor = f.get_tensor(key).to(device, non_blocking=True)
                 
                 # Apply weight
                 if tensor.dim() == 0:
